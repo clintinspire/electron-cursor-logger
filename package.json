@@ -1,0 +1,22 @@
+{
+	"name": "electron-cursor-logger",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "electron ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/clintinspire/electron-cursor-logger.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/clintinspire/electron-cursor-logger/issues"
+	},
+	"homepage": "https://github.com/clintinspire/electron-cursor-logger#readme",
+	"dependencies": {
+		"electron": "^7.0.0"
+	}
+}
