@@ -2,9 +2,9 @@
 	"name": "electron-cursor-logger",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "App.js",
 	"scripts": {
-		"start": "electron ."
+		"start": "tsc App.ts & electron ."
 	},
 	"repository": {
 		"type": "git",
@@ -18,5 +18,8 @@
 	"homepage": "https://github.com/clintinspire/electron-cursor-logger#readme",
 	"dependencies": {
 		"electron": "^7.0.0"
+	},
+	"devDependencies": {
+		"typescript": "^3.6.4"
 	}
 }
