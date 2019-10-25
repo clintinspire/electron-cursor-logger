@@ -1,22 +1,19 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
 }
-
+#container {
+	margin: 20px;
+	padding: 10px;
+	font-size: 1.5rem;
+}
 ol {
+	margin-top:10px;
 	list-style-type: none;
 	counter-reset: li;
 }
-li {
-	font-size: 2rem;
-}
-
 li:before {
   counter-increment: li;
   content: counter(li, decimal-leading-zero);
 	color: red;
 	margin-right: 0.25em;
-}
-
-#container {
-    margin: 0px 25%;
 }

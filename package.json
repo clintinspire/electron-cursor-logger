@@ -2,15 +2,16 @@
 	"name": "electron-cursor-logger",
 	"version": "1.0.0",
 	"description": "",
-	"main": "App.js",
+	"main": "dist/src/App.js",
 	"scripts": {
-		"start": "tsc App.ts & electron ."
+		"start": "tsc & electron .",
+		"lint": "tslint -c tslint.json -p tsconfig.json"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/clintinspire/electron-cursor-logger.git"
 	},
-	"author": "",
+	"author": "Clint James",
 	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/clintinspire/electron-cursor-logger/issues"
@@ -20,6 +21,8 @@
 		"electron": "^7.0.0"
 	},
 	"devDependencies": {
+		"tslint": "^5.20.0",
+		"tslint-config-prettier": "^1.18.0",
 		"typescript": "^3.6.4"
 	}
 }
