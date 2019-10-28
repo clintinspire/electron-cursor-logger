@@ -2,8 +2,8 @@ import { BrowserWindow, screen } from "electron";
 const MARGIN = 20;
 const BROWSER_WINDOW = {
     height: 500,
-    width: 400
-}
+    width: 400,
+};
 
 export default class Main {
     public static main(app: Electron.App, browserWindow: typeof BrowserWindow) {
@@ -16,12 +16,12 @@ export default class Main {
     private static BrowserWindow: typeof BrowserWindow;
 
     private static onReady() {
-        const { height, width } = BROWSER_WINDOW
+        const { height, width } = BROWSER_WINDOW;
         Main.win = new Main.BrowserWindow({
             backgroundColor: "#fff",
             height,
             webPreferences: {
-                allowRunningInsecureContent: true, // Allow logger.js to run
+                allowRunningInsecureContent: true,
                 nodeIntegration: true,
             },
             width,

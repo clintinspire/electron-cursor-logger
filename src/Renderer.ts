@@ -1,7 +1,7 @@
 import { ipcRenderer } from "electron";
 
-ipcRenderer.on("cursor-update", (event, msg) => {
-    updateListUI(msg);
+ipcRenderer.on("cursor-update", (event, log) => {
+    updateListUI(log);
 });
 
 const updateListUI = (coordinates: { x: number; y: number; }) => {
