@@ -1,6 +1,44 @@
 import { ipcRenderer } from "electron";
-
+const CONTAINER_WIDTH = "300px";
+const CACHED_ITEMS_MULTIPLIER = 4; // 4x the items in case user scrolls fast
 const DUMMY = [
+    { x: 1, y: 1 },
+    { x: 2, y: 1 },
+    { x: 3, y: 1 },
+    { x: 4, y: 1 },
+    { x: 5, y: 1 },
+    { x: 6, y: 1 },
+    { x: 7, y: 1 },
+    { x: 8, y: 1 },
+    { x: 9, y: 1 },
+    { x: 10, y: 1 },
+    { x: 11, y: 1 },
+    { x: 12, y: 1 },
+    { x: 13, y: 1 },
+    { x: 14, y: 1 },
+    { x: 15, y: 1 },
+    { x: 16, y: 1 },
+    { x: 17, y: 1 },
+    { x: 18, y: 1 },
+    { x: 19, y: 1 },
+    { x: 20, y: 1 },
+    { x: 21, y: 1 },
+    { x: 22, y: 1 },
+    { x: 23, y: 1 },
+    { x: 24, y: 1 },
+    { x: 25, y: 1 },
+    { x: 26, y: 1 },
+    { x: 27, y: 1 },
+    { x: 28, y: 1 },
+    { x: 29, y: 1 },
+    { x: 30, y: 1 },
+    { x: 31, y: 1 },
+    { x: 32, y: 1 },
+    { x: 33, y: 1 },
+    { x: 34, y: 1 },
+    { x: 35, y: 1 },
+    { x: 36, y: 1 },
+    { x: 37, y: 1 },
     { x: 1, y: 3 },
     { x: 2, y: 3 },
     { x: 3, y: 3 },
@@ -31,6 +69,13 @@ const DUMMY = [
     { x: 28, y: 3 },
     { x: 29, y: 3 },
     { x: 30, y: 3 },
+    { x: 31, y: 3 },
+    { x: 32, y: 3 },
+    { x: 33, y: 3 },
+    { x: 34, y: 3 },
+    { x: 35, y: 3 },
+    { x: 36, y: 3 },
+    { x: 37, y: 3 },
 ];
 
 class VirtualList {
@@ -42,32 +87,35 @@ class VirtualList {
     private screenItemsLen: number;
     private lastScrolled: number;
     private maxBuffer: number;
-    private lastRepaintY: number;
-    scroller: HTMLDivElement;
-    width: any;
-    height: any;
-    first: number;
+    private previousY: number;
+    private scroller: HTMLDivElement;
+    private height: any;
+    private first: number;
 
     constructor(config: IConfig) {
-        this.width = (config && config.w + "px") || "100%";
         this.height = (config && config.h + "px") || "100%";
-        this.scroller = this.createScroller(this.itemHeight * this.totalRows);
 
         this.itemHeight = config.itemHeight;
+        this.removeHiddenNodes = this.removeHiddenNodes.bind(this);
         this.onScroll = this.onScroll.bind(this);
-        this.items = DUMMY;
-        this.totalRows = this.items.length; // TODO remove
-        this.container = this.createContainer(this.width, this.height);
+        this.items = [];
+        this.totalRows = this.items.length;
+
+        this.scroller = this.createScroller(this.itemHeight * this.totalRows);
+        this.container = this.createContainer(this.height);
         this.container.appendChild(this.scroller);
+
         this.screenItemsLen = Math.ceil(config.h / this.itemHeight);
-        this.cachedItemsLen = this.screenItemsLen * 3;
+        this.cachedItemsLen = this.screenItemsLen * CACHED_ITEMS_MULTIPLIER;
         this.maxBuffer = this.screenItemsLen * this.itemHeight;
+        
         this.lastScrolled = 0;
-        this.lastRepaintY = 0;
+        this.previousY = 0;
+        this.first = 0;
+
         this.renderChunk(this.container, 0);
         this.awaitLogs();
-        this.removeBadNodes();
-        this.first = 0;
+        this.removeHiddenNodes();
 
         this.container.addEventListener("scroll", this.onScroll);
     }
@@ -75,16 +123,21 @@ class VirtualList {
     private awaitLogs() {
         ipcRenderer.on("cursor-update", (event, log) => {
             this.items.push(log)
+            this.totalRows = this.items.length
+            this.repaintScroller();
         });
     }
 
-    private removeBadNodes() {
+    private removeHiddenNodes() {
+        const self = this
         setInterval(function () {
-            if (Date.now() - this.lastScrolled > 100) {
-                const badNodes = document.querySelectorAll('[data-rm="1"]');
-                for (let i = 0, l = badNodes.length; i < l; i++) {
-                    this.container.removeChild(badNodes[i]);
+            if (Date.now() - self.lastScrolled > 100) {
+                const hiddenNodes = document.querySelectorAll('[data-rm="1"]');
+                for (let i = 0, l = hiddenNodes.length; i < l; i++) {
+                    self.container.removeChild(hiddenNodes[i]);
                 }
+                // const pad = self.createPadding(hiddenNodes.length)
+                // self.container.style.padding = (this.itemHeight * hiddenNodes.length) + "px"
             }
         }, 300);
     }
@@ -92,12 +145,20 @@ class VirtualList {
     private createRow(i: number) {
         let item: HTMLElement;
         const index = Math.floor(i);
-        const text = (!!this.items[index] && `${this.items[index].x}, ${this.items[index].y}`) || "no text";
+        const text = (!!this.items[index] && `${index}  [${this.items[index].x}, ${this.items[index].y}]`) || "no text";
         const itemText = document.createTextNode(text);
         item = document.createElement("div");
         item.style.height = this.itemHeight + "px";
+        item.style.position = "absolute"
         item.appendChild(itemText);
         item.style.top = (i * this.itemHeight) + "px";
+        return item;
+    }
+
+    private createPadding(count: number) {
+        let item: HTMLElement;
+        item = document.createElement("div");
+        item.style.height = (this.itemHeight * count) + "px";
         return item;
     }
 
@@ -119,9 +180,9 @@ class VirtualList {
         node.appendChild(fragment);
     }
 
-    private createContainer(w: string, h: string) {
+    private createContainer(h: string) {
         const c = document.createElement("div");
-        c.style.width = w;
+        c.style.width = CONTAINER_WIDTH;
         c.style.height = h;
         c.style.overflow = "auto";
         c.style.position = "relative";
@@ -131,6 +192,7 @@ class VirtualList {
 
     private createScroller(h: number) {
         const scroller = document.createElement("div");
+        scroller.id = "scroller"
         scroller.style.opacity = "0";
         scroller.style.position = "absolute";
         scroller.style.top = "0";
@@ -141,19 +203,28 @@ class VirtualList {
     }
 
     private onScroll(e: Event) {
-        const scrollTop = e.target.scrollTop;
-        if (!this.lastRepaintY || Math.abs(scrollTop - this.lastRepaintY) > this.maxBuffer) {
-            this.first = (scrollTop / this.itemHeight) - this.screenItemsLen;
+        const te = e.target;
+        const scrollTop = te.scrollTop; // Triggers reflow
+        
+        if ((!this.previousY || Math.abs(scrollTop - this.previousY) > this.maxBuffer)) {
+            this.first = (scrollTop / this.itemHeight);
+
+            console.log("y/h", scrollTop / this.itemHeight);
+            console.log("first", this.first)
+
             this.renderChunk(this.container, this.first < 0 ? 0 : this.first);
-            this.lastRepaintY = scrollTop;
+            this.previousY = scrollTop;
         }
 
-        // if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-        //     console.log("you're at the bottom of the page")
-        // }
-        this.lastScrolled = Date.now();
 
+        this.lastScrolled = Date.now();
         e.preventDefault();
+    }
+
+    private repaintScroller() {
+        const scroller = document.getElementById("scroller");
+        const newScroller = this.createScroller(this.itemHeight * this.totalRows)
+        scroller.parentNode.replaceChild(newScroller, scroller);
     }
 
 
@@ -161,14 +232,12 @@ class VirtualList {
 
 const list = new VirtualList({
     h: 300,
-    itemHeight: 24,
-    w: 300,
+    itemHeight: 20,
 });
 
 type IConfig = {
     h: number;
     itemHeight: number;
-    w: number;
 }
 
 type IList = {
