@@ -1,0 +1,29 @@
+===============================================================================
+EXTENSION NAME : linecount
+EXTENSION VERSION : 0.1.7
+-------------------------------------------------------------------------------
+count time : 2019-10-28 15:51:17
+count workspace : c:\Users\User\Documents\Projects\electron-cursor-logger
+total files : 17
+total code lines : 1604
+total comment lines : 9
+total blank lines : 152
+
+.gitignore, code is 5, comment is 0, blank is 0.
+dist\src\App.js, code is 5, comment is 0, blank is 0.
+dist\src\Main.js, code is 55, comment is 0, blank is 0.
+dist\src\Renderer.js, code is 13, comment is 0, blank is 0.
+dist\src\VirtualScroll.js, code is 136, comment is 4, blank is 0.
+index.html, code is 18, comment is 1, blank is 3.
+package-lock.json, code is 438, comment is 0, blank is 0.
+package.json, code is 28, comment is 0, blank is 0.
+README.md, code is 38, comment is 0, blank is 13.
+src\App.ts, code is 3, comment is 0, blank is 1.
+src\Main.ts, code is 52, comment is 0, blank is 4.
+src\Renderer.ts, code is 11, comment is 0, blank is 2.
+src\VirtualScroll.ts, code is 154, comment is 4, blank is 22.
+style.css, code is 19, comment is 0, blank is 0.
+tsconfig.json, code is 16, comment is 0, blank is 0.
+tslint.json, code is 95, comment is 0, blank is 7.
+yarn.lock, code is 518, comment is 0, blank is 100.
+===============================================================================

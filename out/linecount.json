@@ -1,0 +1,119 @@
+{
+    "extension": "linecount",
+    "version": "0.1.7",
+    "workspace": "c:\\Users\\User\\Documents\\Projects\\electron-cursor-logger",
+    "linecount": [
+        {
+            "version": "0.1.7",
+            "counttime": "2019-10-28 15:51:17",
+            "filesum": 17,
+            "codesum": 1604,
+            "commentsum": 9,
+            "blanksum": 152,
+            "filelist": [
+                {
+                    "blank": 0,
+                    "code": 5,
+                    "comment": 0,
+                    "filename": ".gitignore"
+                },
+                {
+                    "blank": 0,
+                    "code": 5,
+                    "comment": 0,
+                    "filename": "dist\\src\\App.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 55,
+                    "comment": 0,
+                    "filename": "dist\\src\\Main.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 13,
+                    "comment": 0,
+                    "filename": "dist\\src\\Renderer.js"
+                },
+                {
+                    "blank": 0,
+                    "code": 136,
+                    "comment": 4,
+                    "filename": "dist\\src\\VirtualScroll.js"
+                },
+                {
+                    "blank": 3,
+                    "code": 18,
+                    "comment": 1,
+                    "filename": "index.html"
+                },
+                {
+                    "blank": 0,
+                    "code": 438,
+                    "comment": 0,
+                    "filename": "package-lock.json"
+                },
+                {
+                    "blank": 0,
+                    "code": 28,
+                    "comment": 0,
+                    "filename": "package.json"
+                },
+                {
+                    "blank": 13,
+                    "code": 38,
+                    "comment": 0,
+                    "filename": "README.md"
+                },
+                {
+                    "blank": 1,
+                    "code": 3,
+                    "comment": 0,
+                    "filename": "src\\App.ts"
+                },
+                {
+                    "blank": 4,
+                    "code": 52,
+                    "comment": 0,
+                    "filename": "src\\Main.ts"
+                },
+                {
+                    "blank": 2,
+                    "code": 11,
+                    "comment": 0,
+                    "filename": "src\\Renderer.ts"
+                },
+                {
+                    "blank": 22,
+                    "code": 154,
+                    "comment": 4,
+                    "filename": "src\\VirtualScroll.ts"
+                },
+                {
+                    "blank": 0,
+                    "code": 19,
+                    "comment": 0,
+                    "filename": "style.css"
+                },
+                {
+                    "blank": 0,
+                    "code": 16,
+                    "comment": 0,
+                    "filename": "tsconfig.json"
+                },
+                {
+                    "blank": 7,
+                    "code": 95,
+                    "comment": 0,
+                    "filename": "tslint.json"
+                },
+                {
+                    "blank": 100,
+                    "code": 518,
+                    "comment": 0,
+                    "filename": "yarn.lock"
+                }
+            ]
+        }
+    ]
+}
