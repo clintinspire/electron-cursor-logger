@@ -42,10 +42,4 @@ npm run start or yarn start
 - Cursor detection moved to main process
 - ES6 Class
 - Added yarn :)
-
-## 😓 Actions NOT made after initial feedback
-
--  Virtual scroll. However, please have a look at my attempt to make it work. (VirtualScroll.ts)
-- Docker
-- Webpack
-
+- Virtual scroll

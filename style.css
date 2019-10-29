@@ -6,14 +6,3 @@ body {
 	padding: 10px;
 	font-size: 1rem;
 }
-ol {
-	margin-top:10px;
-	list-style-type: none;
-	counter-reset: li;
-}
-li:before {
-  counter-increment: li;
-  content: counter(li, decimal-leading-zero);
-	color: red;
-	margin-right: 0.25em;
-}
